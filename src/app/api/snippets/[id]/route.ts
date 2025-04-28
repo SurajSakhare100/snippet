@@ -5,8 +5,7 @@ import  connectDB  from '@/lib/mongodb';
 import Snippet from '@/models/Snippet';
 
 export async function GET(
-  context: { params: { id: string }  },
-  req: Request,
+  context: { params: { id: string }  }
 ) {
   try {
     const session = await getServerSession(authOptions);
