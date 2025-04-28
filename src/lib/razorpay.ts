@@ -1,7 +1,6 @@
 import Razorpay from 'razorpay';
-import { connectDB } from './mongodb';
-import { User } from '@/models/User';
-import { Subscription } from '@/models/Subscription';
+import connectDB from './mongodb';
+import User from '@/models/User';
 
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   throw new Error('Razorpay credentials are not configured');
@@ -22,23 +21,6 @@ export const SUBSCRIPTION_PLANS = {
   },
 };
 
-interface RazorpayOrder {
-  id: string;
-  amount: number;
-  currency: string;
-  status: string;
-  receipt: string;
-  created_at: number;
-}
-
-interface RazorpayPayment {
-  id: string;
-  amount: number;
-  currency: string;
-  status: string;
-  order_id: string;
-  created_at: number;
-}
 
 export async function createSubscription(userId: string) {
   await connectDB();
@@ -88,7 +70,7 @@ export async function handleWebhook(payload: any, signature: string) {
 }
 
 async function handleSubscriptionCharged(payload: any) {
-  const { subscription_id, customer_id } = payload.payload.subscription.entity;
+  const { subscription_id } = payload.payload.subscription.entity;
   
   await User.findOneAndUpdate(
     { 'subscription.stripeSubscriptionId': subscription_id },
