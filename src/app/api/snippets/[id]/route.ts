@@ -11,7 +11,7 @@ export async function GET(
   try {
     const session = await getServerSession(authOptions);
 
-    const {id} = await params;
+    const {id} =  params;
     if (!session?.user?.id) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
@@ -39,7 +39,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const {id} = await params;
+    const {id} =  params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -75,7 +75,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) { 
   try {
-    const {id} = await params;
+    const {id} =  params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -112,7 +112,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const {id} = await params;
+    const {id} =  params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
