@@ -108,7 +108,6 @@ export async function PUT(
 
 export async function DELETE(
   context: { params: { id: string }  },
-  req: Request,
 ) {
   try {
     const {id} =  context.params;;
