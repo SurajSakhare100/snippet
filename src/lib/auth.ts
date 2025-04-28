@@ -77,7 +77,7 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async signIn({ user, account, profile, credentials }) {
+    async signIn({ user, account }) {
       try {
         await connectDB();
         

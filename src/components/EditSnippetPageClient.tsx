@@ -32,7 +32,7 @@ export default function EditSnippetPageClient({ snippet, id }: { snippet: Snippe
       toast.success('Snippet updated successfully');
       router.push('/snippets');
     } catch (error) {
-      toast.error('Failed to update snippet');
+      toast.error(error instanceof Error ? error.message : 'Failed to update snippet');
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ export default function EditSnippetPageClient({ snippet, id }: { snippet: Snippe
       toast.success('Snippet deleted successfully');
       router.push('/snippets');
     } catch (error) {
-      toast.error('Failed to delete snippet');
+      toast.error(error instanceof Error ? error.message : 'Failed to delete snippet');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import Razorpay from 'razorpay';
 import connectDB from './mongodb';
 import User from '@/models/User';
+import crypto from 'crypto';
 
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   throw new Error('Razorpay credentials are not configured');
@@ -21,6 +22,26 @@ export const SUBSCRIPTION_PLANS = {
   },
 };
 
+interface RazorpayWebhookPayload {
+  event: string;
+  payload: {
+    subscription: {
+      entity: {
+        id: string;
+        subscription_id: string;
+        current_end: number;
+      };
+    };
+  };
+}
+
+interface SubscriptionChargedPayload extends RazorpayWebhookPayload {
+  event: 'subscription.charged';
+}
+
+interface SubscriptionCancelledPayload extends RazorpayWebhookPayload {
+  event: 'subscription.cancelled';
+}
 
 export async function createSubscription(userId: string) {
   await connectDB();
@@ -42,10 +63,9 @@ export async function createSubscription(userId: string) {
   return subscription;
 }
 
-export async function handleWebhook(payload: any, signature: string) {
+export async function handleWebhook(payload: RazorpayWebhookPayload, signature: string) {
   const secret = process.env.RAZORPAY_WEBHOOK_SECRET!;
   
-  const crypto = require('crypto');
   const expectedSignature = crypto
     .createHmac('sha256', secret)
     .update(JSON.stringify(payload))
@@ -59,17 +79,17 @@ export async function handleWebhook(payload: any, signature: string) {
 
   switch (payload.event) {
     case 'subscription.charged':
-      await handleSubscriptionCharged(payload);
+      await handleSubscriptionCharged(payload as SubscriptionChargedPayload);
       break;
     case 'subscription.cancelled':
-      await handleSubscriptionCancelled(payload);
+      await handleSubscriptionCancelled(payload as SubscriptionCancelledPayload);
       break;
     default:
       console.log('Unhandled webhook event:', payload.event);
   }
 }
 
-async function handleSubscriptionCharged(payload: any) {
+async function handleSubscriptionCharged(payload: SubscriptionChargedPayload) {
   const { subscription_id } = payload.payload.subscription.entity;
   
   await User.findOneAndUpdate(
@@ -81,7 +101,7 @@ async function handleSubscriptionCharged(payload: any) {
   );
 }
 
-async function handleSubscriptionCancelled(payload: any) {
+async function handleSubscriptionCancelled(payload: SubscriptionCancelledPayload) {
   const { subscription_id } = payload.payload.subscription.entity;
   
   await User.findOneAndUpdate(

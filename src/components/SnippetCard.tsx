@@ -40,7 +40,7 @@ export default function SnippetCard({ snippet, onDelete }: SnippetCardProps) {
       toast.success('Snippet deleted successfully');
       onDelete?.();
     } catch (error) {
-      toast.error('Failed to delete snippet');
+      toast.error(error instanceof Error ? error.message : 'Failed to delete snippet');
     } finally {
       setIsDeleting(false);
     }

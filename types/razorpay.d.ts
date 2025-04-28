@@ -53,6 +53,7 @@ declare module 'razorpay' {
   }
 
   class Razorpay {
+    subscriptions: any;
     constructor(options: RazorpayOptions);
     
     orders: {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { Extension } from '@codemirror/state';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -57,7 +58,7 @@ export default function SnippetEditor({
   const [code, setCode] = useState(initialCode);
   const [tags, setTags] = useState<string[]>(initialTags);
   const [newTag, setNewTag] = useState('');
-  const [extensions, setExtensions] = useState<any[]>([]);
+  const [extensions, setExtensions] = useState<Extension[]>([]);
 
   useEffect(() => {
     const loadExtensions = async () => {
