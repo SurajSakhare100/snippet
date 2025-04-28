@@ -6,7 +6,6 @@ import Snippet from '@/models/Snippet';
 
 export async function GET(
   context,
-  _req,
 ) {
   try {
     const session = await getServerSession(authOptions);

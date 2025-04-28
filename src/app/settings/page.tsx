@@ -20,7 +20,7 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      // setSubscription(session?.user?.subscription);
+      setSubscription(session?.user?.subscription);
       setLoading(false);
     }
   }, [status, session]);
