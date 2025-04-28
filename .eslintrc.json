@@ -15,11 +15,11 @@
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
-          "argsIgnorePattern": "^_",    // <-- important: ignore arguments starting with "_"
-          "varsIgnorePattern": "^_"     // <-- also ignore variables starting with "_"
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
         }
       ],
-      "no-unused-vars": "off",            // disable base eslint unused-vars
+      "no-unused-vars": "off",
       "react/react-in-jsx-scope": "off",
       "no-console": "warn"
     }
