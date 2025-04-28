@@ -1,7 +1,7 @@
 // src/lib/mongodb.ts
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
 interface GlobalWithMongoose {
   mongoose: {
@@ -21,29 +21,31 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function connectDB() {
-  if (cached.conn) {
+async function connectDB()  {
+  if (cached?.conn) {
     return cached.conn;
   }
 
-  if (!cached.promise) {
+  if (!cached?.promise) {
     const opts = {
       bufferCommands: false, // Optional Mongoose option
     };
-
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongooseInstance) => {
-      return mongooseInstance;
-    });
+    if (!cached?.promise) {
+      const opts = {
+        bufferCommands: false,
+      };
+  
+      cached!.promise = mongoose.connect(MONGODB_URI, opts);
+    }
+  
+    try {
+      const mongoose = await cached!.promise;
+      cached!.conn = mongoose;
+      return mongoose;
+    } catch (e) {
+      cached!.promise = null;
+      throw e;
+    }
   }
-
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
-
-  return cached.conn;
 }
-
 export default connectDB;
