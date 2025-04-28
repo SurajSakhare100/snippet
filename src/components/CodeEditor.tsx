@@ -18,7 +18,6 @@ const CodeMirror = dynamic(
 
 export default function CodeEditor({
   value,
-  language,
   onChange,
   readOnly = false,
 }: CodeEditorProps) {

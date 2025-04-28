@@ -28,6 +28,7 @@ export default function EditSnippetPage() {
         const data = await response.json();
         setSnippet(data);
       } catch (error) {
+        console.log(error);
         toast.error('Failed to load snippet');
         router.push('/snippets');
       } finally {
@@ -58,6 +59,8 @@ export default function EditSnippetPage() {
       toast.success('Snippet updated successfully');
       router.push('/snippets');
     } catch (error) {
+      
+      console.log(error);
       toast.error('Failed to update snippet');
     }
   };
@@ -73,6 +76,8 @@ export default function EditSnippetPage() {
       toast.success('Snippet deleted successfully');
       router.push('/snippets');
     } catch (error) {
+      
+      console.log(error);
       toast.error('Failed to delete snippet');
     }
   };

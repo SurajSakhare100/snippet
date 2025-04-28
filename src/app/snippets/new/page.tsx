@@ -40,7 +40,7 @@ const LANGUAGES = [
 
 export default function NewSnippetPage() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',

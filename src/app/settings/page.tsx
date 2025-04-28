@@ -6,6 +6,7 @@ import { Navbar } from '@/components/navbar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
 
 interface Subscription {
   status: 'free' | 'pro';
@@ -65,7 +66,7 @@ export default function SettingsPage() {
           <div className="container flex flex-col items-center justify-center gap-4 py-24 text-center">
             <h1 className="text-2xl font-bold">Please sign in to view settings</h1>
             <Button asChild>
-              <a href="/api/auth/signin">Sign In</a>
+              <Link href="/api/auth/signin">Sign In</Link>
             </Button>
           </div>
         </main>
