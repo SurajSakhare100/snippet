@@ -10,17 +10,16 @@
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
-    },
-    "plugins": [
-      "@typescript-eslint"
-    ],
+    "plugins": ["@typescript-eslint"],
     "rules": {
-      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",    // <-- important: ignore arguments starting with "_"
+          "varsIgnorePattern": "^_"     // <-- also ignore variables starting with "_"
+        }
+      ],
+      "no-unused-vars": "off",            // disable base eslint unused-vars
       "react/react-in-jsx-scope": "off",
       "no-console": "warn"
     }
