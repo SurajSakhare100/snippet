@@ -109,7 +109,7 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async session({ session, token }) {
+    async session({ session }) {
       try {
         if (session?.user) {
           await connectDB();

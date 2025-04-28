@@ -1,8 +1,6 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// import { oneDark } from '@codemirror/theme-one-dark';
+import type { Extension } from '@codemirror/state'; // <-- Add this import
 
 interface CodeEditorProps {
   value: string;
@@ -21,7 +19,7 @@ export default function CodeEditor({
   onChange,
   readOnly = false,
 }: CodeEditorProps) {
-  const [extensions, setExtensions] = useState<any[]>([]);
+  const [extensions, setExtensions] = useState<Extension[]>([]); // <-- Use Extension[] here
 
   useEffect(() => {
     const loadExtensions = async () => {
@@ -42,4 +40,4 @@ export default function CodeEditor({
       className="h-full w-full"
     />
   );
-} 
+}
