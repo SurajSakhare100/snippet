@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { SnippetCard } from '@/components/SnippetCard';
+import SnippetCard from '@/components/SnippetCard';
 
 interface Snippet {
   id: string;
