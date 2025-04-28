@@ -2,9 +2,11 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/navbar';
 
-interface HomeProps {}
+interface HomePageProps {
+  searchParams: Record<string, string>;
+}
 
-export default function Home({}: HomeProps) {
+export default function Home({ searchParams }: HomePageProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />

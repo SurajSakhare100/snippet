@@ -1,14 +1,21 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import SnippetEditor from '@/components/SnippetEditor';
 import { toast } from 'sonner';
 
+interface Snippet {
+  id: string;
+  title: string;
+  language: string;
+  code: string;
+  tags: string[];
+}
 
-export default function EditSnippetPage({}) {
+export default function EditSnippetPage() {
   const router = useRouter();
-  const [snippet, setSnippet] = useState<any>(null);
+  const [snippet, setSnippet] = useState<Snippet | null>(null);
   const [loading, setLoading] = useState(true);
   const params = useParams<{ id: string }>();
   const id = params.id;
@@ -20,8 +27,9 @@ export default function EditSnippetPage({}) {
         if (!response.ok) throw new Error('Failed to fetch snippet');
         const data = await response.json();
         setSnippet(data);
-      } catch (error) {
+      } catch (err) {
         toast.error('Failed to load snippet');
+        router.push('/snippets');
       } finally {
         setLoading(false);
       }
@@ -49,7 +57,7 @@ export default function EditSnippetPage({}) {
 
       toast.success('Snippet updated successfully');
       router.push('/snippets');
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to update snippet');
     }
   };
@@ -64,7 +72,7 @@ export default function EditSnippetPage({}) {
 
       toast.success('Snippet deleted successfully');
       router.push('/snippets');
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to delete snippet');
     }
   };
@@ -80,10 +88,10 @@ export default function EditSnippetPage({}) {
   return (
     <div className="h-[calc(100vh-4rem)]">
       <SnippetEditor
-        initialTitle={snippet?.title || ''}
-        initialLanguage={snippet?.language || ''}
-        initialCode={snippet?.code || ''}
-        initialTags={snippet?.tags || []}
+        initialTitle={snippet.title}
+        initialLanguage={snippet.language}
+        initialCode={snippet.code}
+        initialTags={snippet.tags}
         onSave={handleSave}
         onDelete={handleDelete}
       />

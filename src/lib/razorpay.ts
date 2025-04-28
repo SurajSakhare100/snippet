@@ -1,6 +1,7 @@
 import Razorpay from 'razorpay';
 import { connectDB } from './mongodb';
-import User from '@/models/User';
+import { User } from '@/models/User';
+import { Subscription } from '@/models/Subscription';
 
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   throw new Error('Razorpay credentials are not configured');
@@ -20,6 +21,24 @@ export const SUBSCRIPTION_PLANS = {
     interval: 'monthly',
   },
 };
+
+interface RazorpayOrder {
+  id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  receipt: string;
+  created_at: number;
+}
+
+interface RazorpayPayment {
+  id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  order_id: string;
+  created_at: number;
+}
 
 export async function createSubscription(userId: string) {
   await connectDB();
