@@ -6,12 +6,12 @@ import Snippet from '@/models/Snippet';
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string }  }
 ) {
   try {
     const session = await getServerSession(authOptions);
 
-    const {id} =  params;
+    const { id } = context.params;
     if (!session?.user?.id) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
@@ -36,10 +36,10 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string }  }
 ) {
   try {
-    const {id} =  params;
+    const {id} =  context.params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -72,10 +72,10 @@ export async function PATCH(
 }
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string }  }
 ) { 
   try {
-    const {id} =  params;
+    const { id } = context.params;
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -109,10 +109,10 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string }  }
 ) {
   try {
-    const {id} =  params;
+    const {id} =  context.params;;
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -130,7 +130,7 @@ export async function DELETE(
       return new NextResponse('Snippet not found', { status: 404 });
     }
 
-    await Snippet.findByIdAndDelete(params.id);
+    await Snippet.findByIdAndDelete(id);
 
     return new NextResponse('Snippet deleted', { status: 200 });
   } catch (error) {
