@@ -26,10 +26,7 @@ async function connectDB()  {
     return cached.conn;
   }
 
-  if (!cached?.promise) {
-    const opts = {
-      bufferCommands: false, // Optional Mongoose option
-    };
+  
     if (!cached?.promise) {
       const opts = {
         bufferCommands: false,
@@ -45,7 +42,7 @@ async function connectDB()  {
     } catch (e) {
       cached!.promise = null;
       throw e;
-    }
+    
   }
 }
 export default connectDB;
