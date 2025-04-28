@@ -5,8 +5,8 @@ import  connectDB  from '@/lib/mongodb';
 import Snippet from '@/models/Snippet';
 
 export async function GET(
-  context: { params: { id: string }  },
-  _req: Request,
+  context,
+  _req,
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -35,8 +35,8 @@ export async function GET(
 }
 
 export async function PATCH(
-  context: { params: { id: string }  },
-  req: Request,
+  context,
+  req
 ) {
   try {
     const {id} =  context.params;
@@ -71,8 +71,8 @@ export async function PATCH(
   }
 }
 export async function PUT(
-  context: { params: { id: string }  },
-  req: Request,
+  context,
+  req
 ) { 
   try {
     const { id } = context.params;
@@ -108,7 +108,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  context: { params: { id: string }  },
+  context,
 ) {
   try {
     const {id} =  context.params;;
