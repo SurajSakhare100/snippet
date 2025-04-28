@@ -5,6 +5,7 @@ import  connectDB  from '@/lib/mongodb';
 import Snippet from '@/models/Snippet';
 
 export async function GET(
+  _req: Request,
   context: { params: { id: string }  }
 ) {
   try {
