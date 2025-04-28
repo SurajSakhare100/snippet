@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 interface Subscription {
   status: 'free' | 'pro';
-  currentPeriodEnd?: string;
+  currentPeriodEnd?: Date;
 }
 
 export default function SettingsPage() {
